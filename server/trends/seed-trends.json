@@ -1,0 +1,1077 @@
+{
+  "note": "예시(샘플) 트렌드 데이터. 2026-11-11에 공개 기사·사전으로 뜻과 유래를 확인해 정리했고, 유래·시기 서술은 링크한 출처가 뒷받침하는 범위로 맞췄다. 실시간 순위가 아니며, 유튜브 API 키를 넣으면 실제 수집 데이터가 함께 쓰인다. 출처는 링크로만 제공하고 원문은 싣지 않는다.",
+  "verifiedAt": "2026-11-11",
+  "templateSyntax": "{X} 빈칸 / {X|은/는} 빈칸+받침에 맞는 조사 / {X1} 빈칸 말의 첫 글자 / {form} 완성형이 들어갈 자리",
+  "trends": [
+    {
+      "id": "seed-ttalkkak",
+      "keyword": "딸깍",
+      "kind": "word",
+      "pattern": "{X} 딸깍",
+      "category": "일상",
+      "period": "게임 분야에서 시작, 2025~2026년 AI 확산과 함께 급증",
+      "meaning": "마우스 버튼 한 번 누르듯 별 수고 없이 일을 뚝딱 끝내는 상황을 가리키는 말. 요즘은 AI나 자동화 도구로 손쉽게 결과물을 얻었다는 뜻으로 많이 쓴다.",
+      "origin": "버튼 누르는 소리를 흉내 낸 말로, e스포츠·게임 분야에서 손쉽게 이기는 상황을 가리키던 밈에서 나왔다. 이후 생성형 AI가 대중화되면서 일상어로 크게 퍼졌다.",
+      "caution": "원래 ‘노력 없이 날로 먹는다’는 비꼼에서 나온 말이라 남의 결과물이나 노력에 쓰면 깎아내리는 말로 들린다. 내 일에 대한 자조·유머로만 쓰는 것이 안전하다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://www.careet.net/2017",
+        "title": "캐릿 · 2026-10-27"
+      },
+      "engine": {
+        "pos": "noun",
+        "stem": "딸깍이면 끝",
+        "forms": {
+          "banmal": "딸깍이면 끝이야",
+          "haeyo": "딸깍이면 끝이에요",
+          "hapsyo": "딸깍이면 끝입니다",
+          "eumseum": "딸깍이면 끝임",
+          "plain": "딸깍이면 끝이다"
+        },
+        "slot": {
+          "required": false,
+          "template": "{X|은/는} {form}",
+          "defaults": [
+            "회의록 정리",
+            "장보기",
+            "내 과제"
+          ]
+        },
+        "contexts": [
+          "예전엔 한 시간 걸렸는데 이제",
+          "밤새 고민한 게 허무하게",
+          "자동 저장 켜 놨더니"
+        ],
+        "twists": [
+          "{X} 딸깍",
+          "딸깍 한 번에 {X} 끝"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-yareu",
+      "keyword": "야르",
+      "kind": "word",
+      "pattern": "{X}, 야르!",
+      "category": "감탄",
+      "period": "2000년대 유행어, 2026년 재유행",
+      "meaning": "기분이 좋거나 신날 때 외치는 감탄사로 ‘앗싸’, ‘나이스’와 비슷하다. ‘야르하다’처럼 ‘좋다, 멋지다’는 뜻의 서술어로도 쓴다.",
+      "origin": "2000년대 초반부터 10대들이 쓰던 감탄사가 2026년 SNS를 통해 다시 유행했다. 처음 썼다고 밝힌 사람은 있지만 최초 사용처가 따로 검증된 것은 아니다.",
+      "caution": "최초 사용처가 검증된 말은 아니다. 윗세대는 뜻을 모를 수 있고 격식 있는 자리에는 맞지 않는다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://www.insight.co.kr/news/575879",
+        "title": "인사이트 · 2026-09-30"
+      },
+      "engine": {
+        "pos": "fixed",
+        "forms": {
+          "banmal": "야르",
+          "haeyo": "야르",
+          "hapsyo": "야르",
+          "eumseum": "야르",
+          "plain": "야르"
+        },
+        "slot": {
+          "required": false,
+          "template": "{X}, {form}",
+          "defaults": [
+            "퇴근",
+            "금요일",
+            "급식 돈가스"
+          ]
+        },
+        "contexts": [
+          "오늘 급식 돈가스래",
+          "드디어 금요일이다",
+          "택배 왔대"
+        ],
+        "twists": [
+          "{X} 완전 야르하다",
+          "오늘 좀 야르한데"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-nallijabeseu",
+      "keyword": "난리자베스",
+      "kind": "word",
+      "pattern": "{X}자베스",
+      "category": "놀람",
+      "period": "2026년 1월 급확산",
+      "meaning": "‘난리 났다’를 우아한 이름처럼 비튼 말로, 좋은 일이든 정신없는 일이든 호들갑스럽게 놀랄 때 쓴다. ‘맛있자베스’처럼 다른 말에 ‘-자베스’를 붙여 변형한다.",
+      "origin": "한 인스타그램 크리에이터가 2025년 마지막 날 ‘새해 유행어를 배포한다’며 올린 릴스에서 시작되어 2026년 1월에 퍼졌다.",
+      "caution": "2026년 초에 집중적으로 유행한 말이라 지금은 조금 철 지난 느낌을 줄 수 있다. 실제로 심각한 사고나 나쁜 소식에는 쓰지 않는다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://letter.wepick.kr/post/24063",
+        "title": "위픽레터 · 2026-01-24"
+      },
+      "engine": {
+        "pos": "noun",
+        "stem": "난리자베스",
+        "forms": {
+          "banmal": "난리자베스야",
+          "haeyo": "난리자베스예요",
+          "hapsyo": "난리자베스입니다",
+          "eumseum": "난리자베스임",
+          "plain": "난리자베스다"
+        },
+        "slot": {
+          "required": false,
+          "template": "{X} 완전 {form}",
+          "defaults": [
+            "오늘 급식",
+            "단톡방",
+            "우리 집 저녁 메뉴"
+          ]
+        },
+        "contexts": [
+          "구내식당 메뉴 보고 왔는데",
+          "알림이 300개 쌓였길래 봤더니",
+          "세일 시작하자마자"
+        ],
+        "twists": [
+          "맛있자베스",
+          "신났자베스"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-chaegeopkwae",
+      "keyword": "책없쾌",
+      "kind": "word",
+      "pattern": "{X}는 책없쾌",
+      "category": "일상",
+      "period": "2026년 여름 프로야구 SNS에서 자주 쓰임",
+      "meaning": "‘책임 없는 쾌락’의 줄임말로, 결과를 책임질 부담 없이 즐거움만 누리는 상황을 뜻한다.",
+      "origin": "조카를 귀여워하기만 하면 되는 이모·삼촌들이 SNS에 붙이던 농담에서 나왔고, 프로야구 팬들이 응원팀이 아닌 경기를 부담 없이 즐길 때 쓰면서 SNS에서 자주 보이게 됐다.",
+      "caution": "여기서 ‘쾌락’은 단순한 즐거움을 뜻한다. 책임이 따르는 일이나 남에게 피해가 가는 상황에 쓰면 무책임을 자랑하는 것처럼 들릴 수 있다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://weekly.khan.co.kr/article/202608010600021",
+        "title": "주간경향 · 2026-08-01"
+      },
+      "engine": {
+        "pos": "noun",
+        "stem": "책없쾌",
+        "forms": {
+          "banmal": "책없쾌야",
+          "haeyo": "책없쾌예요",
+          "hapsyo": "책없쾌입니다",
+          "eumseum": "책없쾌임",
+          "plain": "책없쾌다"
+        },
+        "slot": {
+          "required": false,
+          "template": "{X|은/는} {form}",
+          "defaults": [
+            "남의 집 강아지 구경",
+            "조카랑 놀기",
+            "남의 팀 경기 보기"
+          ]
+        },
+        "contexts": [
+          "강아지 영상만 한 시간째 보는 중인데",
+          "조카랑 놀다가 집에 가는 길인데",
+          "결과는 내 알 바 아니고 구경만 하니까"
+        ],
+        "twists": [
+          "책없쾌 즐기는 중",
+          "이게 바로 책없쾌"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-jeongbo",
+      "keyword": "OO 정보",
+      "kind": "pattern",
+      "pattern": "{X} 정보",
+      "category": "감탄",
+      "period": "2026년 9월 전후",
+      "meaning": "정말로 정보를 묻는 것이 아니라 ‘저거 나도 갖고 싶다, 빨리 보고 싶다’는 부러움과 기대를 짧게 줄여 말하는 댓글 화법.",
+      "origin": "SNS 게시물 속 옷이나 장소를 두고 ‘정보 좀요’라고 묻던 댓글 문화가 넓어지면서 짧은 형태로 굳어졌다. 최초 게시물이나 시작 시점은 확인되지 않았다.",
+      "caution": "실제 사람에게 쓰면 신상 정보를 캐묻는 것처럼 읽힐 수 있으니 사물·음식·장소·콘텐츠에 쓰는 편이 안전하다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://gogumafarm.kr/%eb%82%b4%ea%b0%80-%ea%b3%a0%ea%b5%ac%eb%a7%88%ed%8c%9c%ec%9d%b4%ec%97%88%ec%9c%bc%eb%a9%b4-%ec%9d%b4-%eb%b0%88%ec%9d%80-%ea%bc%ad-%ec%86%8c%ea%b0%9c%ed%95%98%ea%b3%a0-%ec%8b%b6%ec%9d%8c-2026/",
+        "title": "고구마팜 · 2026-09-21"
+      },
+      "engine": {
+        "pos": "fixed",
+        "forms": {
+          "banmal": "{X} 정보",
+          "haeyo": "{X} 정보요",
+          "hapsyo": "{X} 정보요",
+          "eumseum": "{X} 정보",
+          "plain": "{X} 정보"
+        },
+        "slot": {
+          "required": true,
+          "defaults": [
+            "이 떡볶이 가게",
+            "다음 화",
+            "저 노을 명당"
+          ]
+        },
+        "contexts": [
+          "와 비주얼 뭐야",
+          "여기서 끊는다고?",
+          "사진 보자마자"
+        ],
+        "twists": [
+          "{X} 정보 시급"
+        ],
+        "asFrame": true
+      }
+    },
+    {
+      "id": "seed-seupdeuk-monster",
+      "keyword": "습득하는 몬스터",
+      "kind": "pattern",
+      "pattern": "{X} 습득하는 몬스터",
+      "category": "일상",
+      "period": "2026년 초",
+      "meaning": "눈에 띄거나 인상 깊은 표현을 만났을 때 ‘이건 내가 기억해 둔다’는 뜻으로 붙이는 귀여운 자칭 표현. 새로 익힌 것을 앞에 넣어 쓴다.",
+      "origin": "한 SNS 이용자의 글(‘단어 습득하는 몬스터’)에서 시작되어, 2026년 초 마음에 드는 글을 인용하며 같은 문구를 해시태그로 붙이는 놀이로 퍼졌다.",
+      "caution": "",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://gogumafarm.kr/?p=49049",
+        "title": "고구마팜 · 2026-01-26"
+      },
+      "engine": {
+        "pos": "noun",
+        "stem": "{X} 습득하는 몬스터",
+        "forms": {
+          "banmal": "{X} 습득하는 몬스터",
+          "haeyo": "{X} 습득하는 몬스터예요",
+          "hapsyo": "{X} 습득하는 몬스터입니다",
+          "eumseum": "{X} 습득하는 몬스터임",
+          "plain": "{X} 습득하는 몬스터다"
+        },
+        "slot": {
+          "required": true,
+          "defaults": [
+            "신조어",
+            "맛집 리스트",
+            "꿀팁"
+          ]
+        },
+        "contexts": [
+          "처음 보는 표현이라 메모했어, 나는",
+          "오늘도 하나 배워 간다,",
+          "마음에 들어서 저장함,"
+        ],
+        "twists": [
+          "오늘도 {X} 습득 완료"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-donggyeol-geonjo",
+      "keyword": "동결건조",
+      "kind": "pattern",
+      "pattern": "{X} 동결건조하고 싶다",
+      "category": "감탄",
+      "period": "2025년 9월 등장, 2026년 초 재확산",
+      "meaning": "소중한 사람이나 좋아하는 시절의 모습이 지금 그대로 변하지 않고 오래 남았으면 좋겠다는 애정 표현으로, 식품 보존 방식인 동결건조에 빗댄 말이다.",
+      "origin": "2025년 9월 한 SNS 이용자가 어머니를 지금 모습 그대로 오래 곁에 두고 싶다는 마음을 ‘동결건조’에 빗대어 쓴 글에서 시작됐고, 2026년 초 자녀가 쓰는 이 말의 뜻을 묻는 글이 화제가 되며 다시 퍼졌다.",
+      "caution": "뜻을 모르는 사람에게는 문자 그대로 들려 이상하게 오해될 수 있다. 처음 쓰는 상대에게는 ‘지금 모습 그대로 간직하고 싶다’는 뜻임을 덧붙이면 좋다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://www.careet.net/1862",
+        "title": "캐릿 · 2026-03-11"
+      },
+      "engine": {
+        "pos": "adj",
+        "stem": "{X} 동결건조하고 싶",
+        "forms": {
+          "banmal": "{X} 동결건조하고 싶어",
+          "haeyo": "{X} 동결건조하고 싶어요",
+          "hapsyo": "{X} 동결건조하고 싶습니다",
+          "eumseum": "{X} 동결건조하고 싶음",
+          "plain": "{X} 동결건조하고 싶다"
+        },
+        "slot": {
+          "required": true,
+          "defaults": [
+            "이 순간",
+            "오늘 노을",
+            "주말 아침"
+          ]
+        },
+        "contexts": [
+          "오늘 하늘 진짜 예쁘다,",
+          "다 같이 웃는 지금,",
+          "고양이가 무릎에 올라왔어,"
+        ],
+        "twists": [
+          "{X} 그대로 동결건조"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-akpeul-pyramid",
+      "keyword": "피라미드에도 악플이 달린다",
+      "kind": "pattern",
+      "pattern": "{X}에도 악플이 달린다는 사실을 기억하자",
+      "category": "응원·다짐",
+      "period": "2026년 6월 전후",
+      "meaning": "아무리 대단하고 유명한 것도 혹평을 피하지 못하니, 남의 평가에 너무 흔들리지 말자고 스스로나 상대를 다독이는 말이다.",
+      "origin": "세계적인 유적지와 명소에 달린 황당한 혹평 리뷰를 모아 번역한 게시물에서 시작되어 2026년 상반기에 SNS로 널리 알려졌다.",
+      "caution": "상대가 진지하게 속상해할 때는 고민을 가볍게 넘기는 말로 들릴 수 있으니 분위기를 보고 쓴다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://gogumafarm.kr/%eb%82%98-%ea%b3%a0%ea%b5%ac%eb%a7%88%ed%8c%9c%ec%9d%b8%eb%8d%b0-%ec%9a%94%ec%a6%98-%eb%9c%a8%eb%8a%94-%eb%b0%88-%ea%b0%80%ec%a0%b8%ec%99%94%eb%8b%a4-2026%eb%85%84-6%ec%9b%94-%ec%b5%9c%ec%8b%a0/",
+        "title": "고구마팜 · 2026-06-10"
+      },
+      "engine": {
+        "pos": "fixed",
+        "forms": {
+          "banmal": "{X}에도 악플이 달린다는 사실을 기억하자",
+          "haeyo": "{X}에도 악플이 달린다는 사실을 기억해요",
+          "hapsyo": "{X}에도 악플이 달린다는 사실을 기억합시다",
+          "eumseum": "{X}에도 악플 달림. 기억하기",
+          "plain": "{X}에도 악플이 달린다는 사실을 기억하자"
+        },
+        "slot": {
+          "required": true,
+          "defaults": [
+            "피라미드",
+            "한강 야경",
+            "무지개"
+          ]
+        },
+        "contexts": [
+          "발표 평가 너무 신경 쓰지 마.",
+          "댓글 하나에 흔들릴 뻔했는데,",
+          "오늘의 다짐:"
+        ],
+        "twists": [
+          "{X}에도 악플은 달린다"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-mot-chamji",
+      "keyword": "~는 못 참지",
+      "kind": "pattern",
+      "pattern": "{X}는 못 참지",
+      "category": "공감",
+      "period": "몇 해 전부터 유행, 지금은 관용 표현",
+      "meaning": "좋아하거나 끌리는 것을 보면 그냥 지나칠 수 없다는 뜻으로 쓰는 말이다.",
+      "origin": "몇 해 전부터 온라인에서 ‘○○은 못 참지’ 꼴로 유행해 온 말이다. 최초 사용처는 분명하지 않다.",
+      "caution": "사람의 외모나 선정적인 내용에 붙이면 부적절하게 읽힐 수 있으니 음식·취미·상황에 쓰는 것이 무난하다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://brunch.co.kr/@listans/662",
+        "title": "브런치 글 · 2023-10-31"
+      },
+      "engine": {
+        "pos": "verb",
+        "stem": "{X|은/는} 못 참",
+        "forms": {
+          "banmal": "{X|은/는} 못 참지",
+          "haeyo": "{X|은/는} 못 참죠",
+          "hapsyo": "{X|은/는} 못 참습니다",
+          "eumseum": "{X|은/는} 못 참음",
+          "plain": "{X|은/는} 못 참는다"
+        },
+        "slot": {
+          "required": true,
+          "defaults": [
+            "붕어빵 냄새",
+            "금요일 야식",
+            "주말 늦잠"
+          ]
+        },
+        "contexts": [
+          "퇴근길에 딱 마주쳤는데",
+          "다이어트 중이긴 한데",
+          "지나가다 봤는데"
+        ],
+        "twists": [
+          "{X|은/는} 진짜 못 참겠다",
+          "이건 못 참지"
+        ],
+        "asFrame": true
+      }
+    },
+    {
+      "id": "seed-ohiryeo-joa",
+      "keyword": "오히려 좋아",
+      "kind": "phrase",
+      "pattern": "{X}? 오히려 좋아",
+      "category": "응원·다짐",
+      "period": "2022년 무렵 유행, 이후 상용 표현",
+      "meaning": "일이 예상과 다르게 흘러가거나 손해를 봐도 낙담하지 않고, 그 상황에서 좋은 점을 찾아 긍정적으로 받아들이겠다는 말이다.",
+      "origin": "인터넷 방송 진행자가 자주 쓰던 말이 유튜브 채널에서 거듭 언급되면서 유행한 것으로 알려져 있다.",
+      "caution": "상대가 실제로 힘든 일을 겪었을 때 남이 대신 말하면 가볍게 넘기는 것처럼 들릴 수 있으니 주로 내 상황에 쓴다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://www.the-pr.co.kr/news/articleView.html?idxno=48501",
+        "title": "더피알 · 2022-03-11"
+      },
+      "engine": {
+        "pos": "adj",
+        "stem": "오히려 좋",
+        "forms": {
+          "banmal": "오히려 좋아",
+          "haeyo": "오히려 좋아요",
+          "hapsyo": "오히려 좋습니다",
+          "eumseum": "오히려 좋음",
+          "plain": "오히려 좋다"
+        },
+        "slot": {
+          "required": false,
+          "template": "{X}? {form}",
+          "defaults": [
+            "비 오는 날",
+            "약속 취소",
+            "막차 놓침"
+          ]
+        },
+        "contexts": [
+          "비 와서 약속 취소됐는데",
+          "버스 놓쳐서 걸어가는 중인데",
+          "주말 계획이 다 틀어졌는데"
+        ],
+        "twists": [
+          "이쯤 되면 오히려 좋아",
+          "오히려 좋은 걸지도"
+        ],
+        "asFrame": true
+      }
+    },
+    {
+      "id": "seed-gabojago",
+      "keyword": "가보자고",
+      "kind": "phrase",
+      "pattern": "{X} 가보자고",
+      "category": "응원·다짐",
+      "period": "2021년 말~2022년 대중 확산, 이후 일상어",
+      "meaning": "자신 없거나 떨리는 일을 앞두고 ‘일단 부딪혀 보자’며 자신과 주변의 기운을 끌어올릴 때 쓰는 말이다.",
+      "origin": "2020년 무렵 케이팝 팬덤이 SNS에서 응원 해시태그로 쓰던 말이 다른 커뮤니티로 번졌고, 2021년 말~2022년에 대중적으로 퍼졌다.",
+      "caution": "",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://v.daum.net/v/p09WzDwzle",
+        "title": "뉴시스 · 2022-12-31"
+      },
+      "engine": {
+        "pos": "fixed",
+        "forms": {
+          "banmal": "가보자고",
+          "haeyo": "가보자고요",
+          "hapsyo": "가봅시다",
+          "eumseum": "가보자고",
+          "plain": "가보자고"
+        },
+        "slot": {
+          "required": false,
+          "template": "{X} {form}",
+          "defaults": [
+            "오늘도",
+            "월요일",
+            "첫 발표"
+          ]
+        },
+        "contexts": [
+          "발표 준비 끝났다, 이제",
+          "떨리긴 하는데 일단",
+          "알람 다섯 개 맞췄다, 내일은"
+        ],
+        "twists": [
+          "일단 가보자고",
+          "{X}, 일단 가보자고"
+        ],
+        "asFrame": true
+      }
+    },
+    {
+      "id": "seed-pom-michyeotda",
+      "keyword": "폼 미쳤다",
+      "kind": "pattern",
+      "pattern": "{X} 폼 미쳤다",
+      "category": "칭찬",
+      "period": "2023년 무렵 유행, 지금도 통용",
+      "meaning": "모습이나 스타일, 실력이 평소보다 눈에 띄게 뛰어날 때 감탄하며 칭찬하는 말이다. 여기서 ‘미쳤다’는 ‘정말 대단하다’는 강조의 뜻이다.",
+      "origin": "모습·기량을 뜻하는 영어 ‘form’에 ‘정말 대단하다’는 뜻의 강조어 ‘미쳤다’가 붙은 말로, 젊은 층의 칭찬 표현으로 쓰이다 널리 퍼졌다.",
+      "caution": "‘미쳤다’가 강조어로 쓰여 격식 있는 자리나 연장자에게는 거칠게 들릴 수 있다. 비꼬는 말투로 들리지 않게 쓴다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://bravo.etoday.co.kr/view/atc_view/19039",
+        "title": "브라보마이라이프 · 2026-04-27"
+      },
+      "engine": {
+        "pos": "past",
+        "stem": "{X} 폼 미쳤",
+        "forms": {
+          "banmal": "{X} 폼 미쳤다",
+          "haeyo": "{X} 폼 미쳤어요",
+          "hapsyo": "{X} 폼 미쳤습니다",
+          "eumseum": "{X} 폼 미쳤음",
+          "plain": "{X} 폼 미쳤다"
+        },
+        "slot": {
+          "required": true,
+          "defaults": [
+            "오늘 급식",
+            "네 발표",
+            "오늘 노을"
+          ]
+        },
+        "contexts": [
+          "방금 보고 왔는데",
+          "기대 안 했는데",
+          "솔직히 말해서"
+        ],
+        "twists": [
+          "{X} 폼 올랐다"
+        ],
+        "asFrame": true
+      }
+    },
+    {
+      "id": "seed-jungkkeokma",
+      "keyword": "중요한 건 꺾이지 않는 마음",
+      "kind": "pattern",
+      "pattern": "중요한 건 꺾이지 않는 {X}",
+      "category": "응원·다짐",
+      "period": "2022년 하반기~2023년 유행, 지금은 응원 표현으로 정착",
+      "meaning": "상황이 불리하거나 힘들어도 포기하지 않고 끝까지 해 보겠다는 의지를 다지거나 서로를 격려할 때 쓰는 말이다. 줄여서 ‘중꺾마’라고 한다.",
+      "origin": "2022년 10월 한 e스포츠 세계대회에서 패배 직후 진행된 선수 인터뷰 영상에 담당 기자가 붙인 제목 문구에서 나왔다. 그 팀이 이후 써 내려간 역전 드라마와 같은 해 월드컵을 계기로 전국적인 유행어가 됐다.",
+      "caution": "",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://khan.co.kr/article/202301020300015",
+        "title": "경향신문 · 2023-01-02"
+      },
+      "engine": {
+        "pos": "noun",
+        "stem": "중요한 건 꺾이지 않는 {X}",
+        "forms": {
+          "banmal": "중요한 건 꺾이지 않는 {X}",
+          "haeyo": "중요한 건 꺾이지 않는 {X|이에요/예요}",
+          "hapsyo": "중요한 건 꺾이지 않는 {X}입니다",
+          "eumseum": "중요한 건 꺾이지 않는 {X}",
+          "plain": "중요한 건 꺾이지 않는 {X}"
+        },
+        "slot": {
+          "required": true,
+          "defaults": [
+            "마음",
+            "식욕",
+            "출근 의지"
+          ]
+        },
+        "contexts": [
+          "세 번째 도전이지만",
+          "오늘도 떨어졌지만",
+          "다이어트 3일 차,"
+        ],
+        "twists": [
+          "중꺾마"
+        ],
+        "asFrame": true
+      }
+    },
+    {
+      "id": "seed-gungnul",
+      "keyword": "국룰",
+      "kind": "pattern",
+      "pattern": "{X}는 국룰",
+      "category": "일상",
+      "period": "2020년 무렵부터 널리 쓰임",
+      "meaning": "법이나 공식 규정은 아니지만 대다수가 당연하게 여기고 따르는 선택이나 방식을 가리키는 말이다.",
+      "origin": "나라 ‘국(國)’과 영어 ‘rule’을 합친 신조어로, ‘국민 다수가 공감하는 규칙’쯤으로 풀이된다. 특정한 최초 출처는 알려져 있지 않다.",
+      "caution": "",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://bravo.etoday.co.kr/view/atc_view/19416",
+        "title": "브라보마이라이프 · 2026-06-22"
+      },
+      "engine": {
+        "pos": "noun",
+        "stem": "{X|은/는} 국룰",
+        "forms": {
+          "banmal": "{X|은/는} 국룰이지",
+          "haeyo": "{X|은/는} 국룰이죠",
+          "hapsyo": "{X|은/는} 국룰입니다",
+          "eumseum": "{X|은/는} 국룰임",
+          "plain": "{X|은/는} 국룰이다"
+        },
+        "slot": {
+          "required": true,
+          "defaults": [
+            "비 오는 날 파전",
+            "시험 끝나고 노래방",
+            "치킨엔 콜라"
+          ]
+        },
+        "contexts": [
+          "오늘 비 온다길래",
+          "이건 반박 불가,",
+          "다들 알잖아,"
+        ],
+        "twists": [
+          "이건 그냥 국룰"
+        ],
+        "asFrame": true
+      }
+    },
+    {
+      "id": "seed-jinsimin-pyeon",
+      "keyword": "~에 진심인 편",
+      "kind": "pattern",
+      "pattern": "{X}에 진심인 편",
+      "category": "일상",
+      "period": "최근 몇 년 사이 널리 쓰임",
+      "meaning": "어떤 대상이나 분야를 대충 넘기지 않고 유난히 열정과 정성을 쏟는다는 것을 가볍게 밝히는 말이다.",
+      "origin": "정확한 기원과 쓰이기 시작한 시기는 확인되지 않는다. 국립국어원은 유래를 단정하기 어렵고 문법에 어긋난다고 보기도 어렵다고 답한 바 있다.",
+      "caution": "",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://www.korean.go.kr/front/onlineQna/onlineQnaView.do?mn_id=&qna_seq=330738&pageIndex=1",
+        "title": "국립국어원 온라인가나다 · 2026-05-03"
+      },
+      "engine": {
+        "pos": "noun",
+        "stem": "{X}에 진심인 편",
+        "forms": {
+          "banmal": "{X}에 진심인 편",
+          "haeyo": "{X}에 진심인 편이에요",
+          "hapsyo": "{X}에 진심인 편입니다",
+          "eumseum": "{X}에 진심인 편임",
+          "plain": "{X}에 진심인 편이다"
+        },
+        "slot": {
+          "required": true,
+          "defaults": [
+            "떡볶이",
+            "낮잠",
+            "문구류"
+          ]
+        },
+        "contexts": [
+          "맛집 지도까지 만든 거 보면 나",
+          "다들 몰랐겠지만 나",
+          "자기소개 한 줄:"
+        ],
+        "twists": [
+          "{X}에만 진심인 편"
+        ],
+        "asFrame": true
+      }
+    },
+    {
+      "id": "seed-gatsaeng",
+      "keyword": "갓생",
+      "kind": "word",
+      "pattern": "{X}는 갓생 산다",
+      "category": "응원·다짐",
+      "period": "2020년 무렵 등장, 지금도 사용",
+      "meaning": "시간을 허투루 쓰지 않고 부지런하고 모범적으로 사는 삶을 뜻한다. 매일의 작은 계획을 꾸준히 지키는 것을 가리키며 주로 ‘갓생 살다’ 꼴로 쓴다.",
+      "origin": "뛰어남을 강조하는 ‘갓(God)’에 ‘인생’의 ‘생’을 붙인 말이다. 2020년 무렵 등장해 이후 언급량이 꾸준히 늘며 널리 퍼졌다.",
+      "caution": "상대에게 ‘갓생 살아야지’라고 권하면 생산성 압박이나 훈계처럼 들릴 수 있으니 내 다짐 용도로 쓰는 편이 무난하다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://mediahub.seoul.go.kr/archives/2006903",
+        "title": "내 손안에 서울 · 2023-02-23"
+      },
+      "engine": {
+        "pos": "verb",
+        "stem": "갓생 살",
+        "stemN": "갓생 사",
+        "forms": {
+          "banmal": "갓생 산다",
+          "haeyo": "갓생 살아요",
+          "hapsyo": "갓생 삽니다",
+          "eumseum": "갓생 삶",
+          "plain": "갓생 산다"
+        },
+        "slot": {
+          "required": false,
+          "template": "{X|은/는} {form}",
+          "defaults": [
+            "이번 달",
+            "내일부터",
+            "오늘 하루"
+          ]
+        },
+        "contexts": [
+          "새벽 수영 등록했어,",
+          "플래너 새로 샀다,",
+          "알람 6시에 맞췄어,"
+        ],
+        "twists": [
+          "갓생은 내일부터",
+          "오늘만 갓생"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-kingbatne",
+      "keyword": "킹받네",
+      "kind": "word",
+      "pattern": "{X} 킹받네",
+      "category": "자조·푸념",
+      "period": "2021년 무렵 확산",
+      "meaning": "‘열받네’를 강조한 말로 몹시 약 오른다는 뜻이다. 실제로는 가볍게 거슬리거나, 얄미울 만큼 웃기고 잘해서 감탄스러울 때도 장난스럽게 쓴다.",
+      "origin": "‘열받다’의 ‘열’을 강조의 뜻으로 붙이는 ‘킹(King)’으로 바꿔 만든 말이다. 유튜브와 SNS를 거쳐 방송 자막에까지 퍼졌다.",
+      "caution": "짜증을 나타내는 말이라 특정 사람을 직접 가리켜 쓰면 무례하게 들릴 수 있다. 상황이나 나 자신에 대한 가벼운 푸념으로 쓴다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://www.careet.net/526",
+        "title": "캐릿 · 2021-10-15"
+      },
+      "engine": {
+        "pos": "verb",
+        "stem": "킹받",
+        "forms": {
+          "banmal": "킹받네",
+          "haeyo": "킹받네요",
+          "hapsyo": "킹받습니다",
+          "eumseum": "킹받음",
+          "plain": "킹받는다"
+        },
+        "slot": {
+          "required": false,
+          "template": "{X} {form}",
+          "defaults": [
+            "월요일 아침",
+            "내 통장 잔고",
+            "알람 소리"
+          ]
+        },
+        "contexts": [
+          "알람 다섯 개 맞췄는데 또 늦잠 잤네,",
+          "분명 저장했는데 파일이 없네,",
+          "우산 챙긴 날만 비가 안 와,"
+        ],
+        "twists": [
+          "킹받는데 웃기네"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-aljalttakkkalsen",
+      "keyword": "알잘딱깔센",
+      "kind": "word",
+      "pattern": "{X} 알잘딱깔센",
+      "category": "칭찬",
+      "period": "2020~2021년 확산",
+      "meaning": "‘알아서 잘 딱 깔끔하고 센스 있게’의 앞 글자를 딴 말로, 일일이 말하지 않아도 눈치껏 깔끔하게 일을 처리한다는 뜻이다.",
+      "origin": "인터넷 1인 방송에서 쓰이던 말이 시청자 사이에 퍼졌고, 2020년에는 신조어 소개 기사에 실릴 만큼 널리 알려졌다.",
+      "caution": "남에게 일을 시키며 쓰면 기준 없이 ‘알아서 잘하라’는 요구로 들려 반감을 살 수 있다. 결과를 칭찬하거나 내 다짐으로 쓰는 편이 무난하다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://www.dailian.co.kr/news/view/917519",
+        "title": "데일리안 · 2020-09-04"
+      },
+      "engine": {
+        "pos": "noun",
+        "stem": "알잘딱깔센",
+        "forms": {
+          "banmal": "알잘딱깔센이네",
+          "haeyo": "알잘딱깔센이네요",
+          "hapsyo": "알잘딱깔센입니다",
+          "eumseum": "알잘딱깔센임",
+          "plain": "알잘딱깔센이다"
+        },
+        "slot": {
+          "required": false,
+          "template": "{X} {form}",
+          "defaults": [
+            "오늘 메뉴 선정",
+            "회식 장소",
+            "선물 포장"
+          ]
+        },
+        "contexts": [
+          "말 안 해도 척척 해 놨네,",
+          "다들 만족한 거 보면",
+          "이 정도면"
+        ],
+        "twists": [
+          "알잘딱깔센으로 간다"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-segwon",
+      "keyword": "~세권",
+      "kind": "pattern",
+      "pattern": "{X}세권",
+      "category": "일상",
+      "period": "2019년 무렵 확산, 이후 정착",
+      "meaning": "‘역세권’을 본떠, 원하는 가게나 시설이 걸어서 갈 만큼 가까운 동네라는 뜻으로 앞말을 바꿔 붙이는 표현이다. 보통 앞말의 첫 글자만 딴다(숲세권, 슬세권).",
+      "origin": "지하철역 주변을 뜻하는 부동산 용어 ‘역세권’의 틀을 다른 편의 시설에 넓혀 쓴 말이다. 2019년 무렵 파생어가 부동산 시장과 분양 마케팅에서 널리 쓰였고, 이후 일상 대화로도 퍼졌다.",
+      "caution": "특정 프랜차이즈 상호를 줄인 파생어가 많다. 상호 대신 숲·도서관·편의점 같은 일반 명사를 쓴다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://www.ajunews.com/view/20190930142246989",
+        "title": "아주경제 · 2019-10-01"
+      },
+      "engine": {
+        "pos": "noun",
+        "stem": "우리 집 {X1}세권",
+        "forms": {
+          "banmal": "우리 집 {X1}세권이야",
+          "haeyo": "우리 집 {X1}세권이에요",
+          "hapsyo": "우리 집 {X1}세권입니다",
+          "eumseum": "우리 집 {X1}세권임",
+          "plain": "우리 집 {X1}세권이다"
+        },
+        "slot": {
+          "required": true,
+          "defaults": [
+            "붕어빵",
+            "도서관",
+            "편의점"
+          ]
+        },
+        "contexts": [
+          "걸어서 3분이면 {X} 나오는 거 보면",
+          "이사 와서 제일 좋은 점:",
+          "창문 열면 {X|이/가} 보여,"
+        ],
+        "twists": [
+          "여기 완전 {X1}세권"
+        ],
+        "asFrame": true
+      }
+    },
+    {
+      "id": "seed-chugumi",
+      "keyword": "추구미",
+      "kind": "pattern",
+      "pattern": "내 추구미는 {X}",
+      "category": "응원·다짐",
+      "period": "2024년 대중화",
+      "meaning": "자신이 닮고 싶거나 지향하는 이미지·스타일·분위기를 가리키는 말이다. 외모뿐 아니라 패션, 분위기 등에도 넓게 쓴다.",
+      "origin": "‘추구하다’와 ‘미(美)’를 합친 말로, Z세대가 SNS에서 쓰며 퍼졌고 2024년 Z세대 유행어로 꼽혔다.",
+      "caution": "빈칸에 실존 인물 이름을 넣지 않는다. 다른 사람의 외모를 평가하는 용도로 쓰면 불쾌감을 줄 수 있다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://v.daum.net/v/PRy0ZcbYWv",
+        "title": "주간동아 · 2025-01-08"
+      },
+      "engine": {
+        "pos": "noun",
+        "stem": "내 추구미는 {X}",
+        "forms": {
+          "banmal": "내 추구미는 {X}",
+          "haeyo": "제 추구미는 {X|이에요/예요}",
+          "hapsyo": "제 추구미는 {X}입니다",
+          "eumseum": "내 추구미는 {X}",
+          "plain": "내 추구미는 {X}"
+        },
+        "slot": {
+          "required": true,
+          "defaults": [
+            "여유로운 아침형 인간",
+            "계획형 인간",
+            "미니멀리스트"
+          ]
+        },
+        "contexts": [
+          "현실은 알람 열 개지만",
+          "올해 목표 한 줄:",
+          "책상은 엉망이지만"
+        ],
+        "twists": [
+          "추구미는 {X}, 현실은 침대"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-jeommechu",
+      "keyword": "점메추",
+      "kind": "word",
+      "pattern": "{X}메추",
+      "category": "일상",
+      "period": "2022년 무렵 확산, 이후 일상어",
+      "meaning": "‘점심 메뉴 추천’을 줄인 말로, 무엇을 먹을지 골라 달라고 부탁할 때 쓴다. 앞 글자를 바꿔 ‘저메추(저녁)’처럼 응용한다.",
+      "origin": "온라인 대화에서 쓰이던 줄임말로 최초 출처는 특정되지 않는다. 2022년 무렵 신조어 소개 기사에 실리며 널리 알려졌다.",
+      "caution": "",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://www.newsian.co.kr/news/articleView.html?idxno=55354",
+        "title": "뉴시안 · 2022-06-27"
+      },
+      "engine": {
+        "pos": "fixed",
+        "forms": {
+          "banmal": "점메추 좀",
+          "haeyo": "점메추 부탁해요",
+          "hapsyo": "점메추 부탁드립니다",
+          "eumseum": "점메추 구함",
+          "plain": "점메추 좀"
+        },
+        "slot": {
+          "required": false,
+          "template": "{X} {form}",
+          "defaults": [
+            "국물 있는 걸로",
+            "만 원 이하로",
+            "매운 거 빼고"
+          ]
+        },
+        "contexts": [
+          "11시 반인데 아직도 못 정했어,",
+          "오늘은 진짜 모르겠다,",
+          "어제 먹은 건 빼고,"
+        ],
+        "twists": [
+          "저메추 좀",
+          "야메추 받는다"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-moreuneun-gae-sanchaek",
+      "keyword": "모르는 개 산책",
+      "kind": "phrase",
+      "pattern": null,
+      "category": "일상",
+      "period": "이전부터 쓰인 말장난, 2026년 여름 재확산",
+      "meaning": "속담 ‘모르는 게 상책’을 소리가 비슷한 말로 일부러 틀리게 쓴 말장난이다. 낯선 강아지를 마주친 상황을 귀엽게 말할 때 쓰며, 속담의 원뜻을 살려 ‘모르고 지나가는 게 편하다’는 농담으로 쓰기도 한다.",
+      "origin": "속담 ‘모르는 게 상책’을 소리가 비슷한 말로 바꿔 쓴 말장난으로, 두 표현 중 하나를 고르는 밸런스 게임 등으로 온라인에서 공유되다가 강아지 콘텐츠 제목으로 자리 잡았다. 최초 작성자와 시점은 확인되지 않는다.",
+      "caution": "일부러 틀리게 쓰는 말장난이라 원래 속담을 모르는 사람에게는 맞춤법 실수로 보일 수 있다.",
+      "source": {
+        "type": "seed",
+        "label": "예시 데이터",
+        "url": "https://maily.so/trendaword/posts/8do72j5nrgq",
+        "title": "Trend A Word 뉴스레터 · 2026-08-04"
+      },
+      "engine": {
+        "pos": "noun",
+        "stem": "모르는 개 산책",
+        "forms": {
+          "banmal": "모르는 개 산책이지",
+          "haeyo": "모르는 개 산책이죠",
+          "hapsyo": "모르는 개 산책입니다",
+          "eumseum": "모르는 개 산책임",
+          "plain": "모르는 개 산책이다"
+        },
+        "slot": null,
+        "contexts": [
+          "굳이 알아봤자 뭐 해,",
+          "스포일러는 안 볼래,",
+          "시험 점수는 내일 볼래,"
+        ],
+        "twists": [
+          "아는 개 산책"
+        ],
+        "asFrame": false
+      }
+    },
+    {
+      "id": "seed-season-bungeoppang",
+      "keyword": "붕어빵",
+      "kind": "keyword",
+      "pattern": null,
+      "category": "시즌",
+      "period": "겨울",
+      "meaning": "날이 추워지면 SNS에 자주 오르는 겨울 간식 키워드. 뜻 설명이 따로 없는 ‘키워드형 트렌드’가 어떻게 조합되는지 보여 주는 예시다.",
+      "origin": "",
+      "caution": "",
+      "source": {
+        "type": "seed",
+        "label": "시즌 키워드 예시",
+        "url": null,
+        "title": null
+      },
+      "engine": null
+    },
+    {
+      "id": "seed-season-cheonnun",
+      "keyword": "첫눈",
+      "kind": "keyword",
+      "pattern": null,
+      "category": "시즌",
+      "period": "겨울",
+      "meaning": "해마다 초겨울에 화제가 되는 계절 키워드. 키워드형 트렌드 예시다.",
+      "origin": "",
+      "caution": "",
+      "source": {
+        "type": "seed",
+        "label": "시즌 키워드 예시",
+        "url": null,
+        "title": null
+      },
+      "engine": null
+    },
+    {
+      "id": "seed-season-yeonmal-moim",
+      "keyword": "연말 모임",
+      "kind": "keyword",
+      "pattern": null,
+      "category": "시즌",
+      "period": "11~12월",
+      "meaning": "송년회·동창회 약속이 몰리는 시기의 계절 키워드. 키워드형 트렌드 예시다.",
+      "origin": "",
+      "caution": "",
+      "source": {
+        "type": "seed",
+        "label": "시즌 키워드 예시",
+        "url": null,
+        "title": null
+      },
+      "engine": null
+    },
+    {
+      "id": "seed-season-long-padding",
+      "keyword": "롱패딩",
+      "kind": "keyword",
+      "pattern": null,
+      "category": "시즌",
+      "period": "겨울",
+      "meaning": "한파가 오면 다시 꺼내 입는 겨울 외투 키워드. 키워드형 트렌드 예시다.",
+      "origin": "",
+      "caution": "",
+      "source": {
+        "type": "seed",
+        "label": "시즌 키워드 예시",
+        "url": null,
+        "title": null
+      },
+      "engine": null
+    }
+  ]
+}
