@@ -4,6 +4,7 @@ import { createReadStream } from 'node:fs'
 import { stat } from 'node:fs/promises'
 import path from 'node:path'
 import { timingSafeEqual, createHash } from 'node:crypto'
+import { API_ERRORS } from '../shared/api-messages.js'
 
 export class HttpError extends Error {
   /**
@@ -35,6 +36,21 @@ const MIME = {
   '.webmanifest': 'application/manifest+json',
 }
 
+/** 콘텐츠 보안 정책. 정적 배포 빌드(scripts/build-static.mjs)도 이 목록으로 <meta> 정책을 만든다. */
+export const CSP_DIRECTIVES = Object.freeze([
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self'",
+  "img-src 'self' data: blob:",
+  "font-src 'self'",
+  "connect-src 'self'",
+  "media-src 'self' blob:",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+])
+
 const SECURITY_HEADERS = {
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
@@ -43,19 +59,7 @@ const SECURITY_HEADERS = {
   'Cross-Origin-Resource-Policy': 'same-origin',
   // 마이크는 같은 출처에서만. 카메라·위치 등은 쓰지 않는다.
   'Permissions-Policy': 'microphone=(self), camera=(), geolocation=(), payment=(), usb=()',
-  'Content-Security-Policy': [
-    "default-src 'self'",
-    "script-src 'self'",
-    "style-src 'self'",
-    "img-src 'self' data: blob:",
-    "font-src 'self'",
-    "connect-src 'self'",
-    "media-src 'self' blob:",
-    "object-src 'none'",
-    "base-uri 'self'",
-    "form-action 'self'",
-    "frame-ancestors 'none'",
-  ].join('; '),
+  'Content-Security-Policy': CSP_DIRECTIVES.join('; '),
 }
 
 const LOOPBACK = new Set(['127.0.0.1', '::1', '::ffff:127.0.0.1'])
@@ -314,7 +318,7 @@ export function createApp({ config, log = console }) {
           } catch {
             throw new HttpError(400, 'JSON 형식이 아닙니다.', 'bad_json')
           }
-          if (body === null || typeof body !== 'object' || Array.isArray(body)) throw new HttpError(400, 'JSON 객체가 필요합니다.', 'bad_json')
+          if (body === null || typeof body !== 'object' || Array.isArray(body)) throw new HttpError(API_ERRORS.badJsonObject.status, API_ERRORS.badJsonObject.message, API_ERRORS.badJsonObject.code)
         }
 
         const m = route.regex.exec(pathname)

@@ -1,10 +1,11 @@
 // 생성 엔진의 지휘자: 입력 다듬기 → 후보 만들기(LLM 또는 규칙) → 안전 필터 → 순위.
 // 기록에는 개수와 걸린 시간만 남긴다. 프로필 내용·후보 문구·직접 입력한 트렌드는 남기지 않는다.
-import { createHash, randomUUID } from 'node:crypto'
 import { LIMITS, TECHNIQUE_IDS } from '../../shared/constants.js'
+import { randomUUID, sha256Hex } from '../../shared/crypto-lite.js'
 import { charLength } from '../../shared/hangul.js'
 import { generateLocal } from './local-engine.js'
-import { LlmError } from './llm.js'
+// SDK를 부르는 llm.js 대신 오류 클래스만 불러온다 — 정적 배포에는 llm.js를 싣지 않는다
+import { LlmError } from './llm-error.js'
 import { buildGenerationRequest, buildSafetyRequest } from './prompt.js'
 import { rankCandidates } from './ranking.js'
 import { MAX_TEXT_CHARS, cleanText, isRecord, sanitizeCustomTrend, sanitizeFeedback, sanitizeOptions, sanitizeProfilePayload, textKey } from './sanitize.js'
@@ -105,7 +106,7 @@ export function createGenerator({ config, llm, safety, trendStore, log = console
     const { keyword, meaning } = sanitizeCustomTrend(raw)
     const categories = blockedBy([keyword, meaning], 'trend')
     if (categories) return { ok: false, categories }
-    const id = `custom-${createHash('sha256').update(keyword).digest('hex').slice(0, 10)}`
+    const id = `custom-${sha256Hex(keyword).slice(0, 10)}`
     return {
       ok: true,
       trend: {

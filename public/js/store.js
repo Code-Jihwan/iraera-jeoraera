@@ -1,6 +1,6 @@
 // 브라우저 쪽 상태. 말투 프로필·보관함·반응 기록은 이 기기(localStorage)에만 둔다.
 // 붙여 넣은 원문과 녹음 결과는 여기에 저장하지 않는다(분석이 끝나면 메모리에서도 지운다).
-import { CONSENT_VERSION, LIMITS, SITUATION_IDS, SPICE_IDS, TECHNIQUE_IDS } from '/shared/constants.js'
+import { CONSENT_VERSION, LIMITS, SITUATION_IDS, SPICE_IDS, TECHNIQUE_IDS } from '../shared/constants.js'
 
 const STORAGE_KEY = 'my-catchphrase.v1'
 

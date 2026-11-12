@@ -1,19 +1,20 @@
 // 앱 시작점: 틀(머리글·단계 표시·바닥글)을 그리고, 주소(#/…)에 맞는 화면을 붙인다.
-import { h, mount, icon } from '/js/dom.js'
-import { getState, subscribe, hasConsent, onExternalChange } from '/js/store.js'
-import { api } from '/js/api.js'
-import { toast, closeModals } from '/js/ui.js'
-import { DEFAULT_SERVICE_NAME, TEAM_LABEL } from '/shared/constants.js'
-import { isUsableProfile } from '/shared/style-analyzer.js'
-import { startView } from '/js/views/start.js'
-import { registerView } from '/js/views/register.js'
-import { profileView } from '/js/views/profile.js'
-import { trendsView } from '/js/views/trends.js'
-import { generateView } from '/js/views/generate.js'
-import { resultView } from '/js/views/result.js'
-import { savedView } from '/js/views/saved.js'
-import { dataView } from '/js/views/data.js'
-import { policyView } from '/js/views/policy.js'
+import { h, mount, icon } from './dom.js'
+import { getState, subscribe, hasConsent, onExternalChange } from './store.js'
+import { api } from './api.js'
+import { toast, closeModals } from './ui.js'
+import { DEFAULT_SERVICE_NAME, TEAM_LABEL } from '../shared/constants.js'
+import { RUNTIME } from './runtime.js'
+import { isUsableProfile } from '../shared/style-analyzer.js'
+import { startView } from './views/start.js'
+import { registerView } from './views/register.js'
+import { profileView } from './views/profile.js'
+import { trendsView } from './views/trends.js'
+import { generateView } from './views/generate.js'
+import { resultView } from './views/result.js'
+import { savedView } from './views/saved.js'
+import { dataView } from './views/data.js'
+import { policyView } from './views/policy.js'
 
 const STEPS = [
   { n: 1, route: 'register', label: '말투 등록' },
@@ -34,6 +35,9 @@ const ROUTES = {
   data: { view: dataView, step: 0, title: '내 데이터' },
   policy: { view: policyView, step: 0, title: '이용 안내' },
 }
+
+// GitHub Pages 정적 데모: 서버·운영 화면이 없다
+const IS_STATIC = RUNTIME.mode === 'static'
 
 const runtime = {
   status: null,
@@ -107,7 +111,7 @@ function renderTopbar() {
       engine
         ? h(
             'span',
-            { class: 'engine-chip', dataset: { mode: engine.mode }, title: engine.mode === 'llm' ? `모델: ${engine.model || ''}` : engine.configured ? `AI 엔진을 쓸 수 없어 규칙 기반 엔진으로 동작합니다${engine.reason ? ` (${engine.reason})` : ''}` : 'LLM 키가 없어 규칙 기반 엔진으로 동작합니다' },
+            { class: 'engine-chip', dataset: { mode: engine.mode }, title: engine.mode === 'llm' ? `모델: ${engine.model || ''}` : engine.configured ? `AI 엔진을 쓸 수 없어 규칙 기반 엔진으로 동작합니다${engine.reason ? ` (${engine.reason})` : ''}` : IS_STATIC ? 'GitHub Pages 데모라 규칙 기반 엔진으로 동작합니다' : 'LLM 키가 없어 규칙 기반 엔진으로 동작합니다' },
             h('span', { class: 'dot' }),
             engine.label,
           )
@@ -191,7 +195,8 @@ function renderFooter() {
         { class: 'row' },
         h('a', { href: '#/policy' }, '이용 안내 · 개인정보 처리'),
         h('a', { href: '#/data' }, '내 데이터 관리'),
-        h('a', { href: '/ops.html' }, '운영 화면'),
+        // 운영 화면은 서버 모드에만 있다
+        IS_STATIC ? h('span', null, 'GitHub Pages 데모 · 기본 엔진(규칙 기반)') : h('a', { href: 'ops.html' }, '운영 화면'),
         h('span', null, TEAM_LABEL),
       ),
     ),
@@ -316,29 +321,61 @@ async function refreshStatus() {
   return runtime.status
 }
 
-window.addEventListener('hashchange', render)
-subscribe(() => {
-  renderTopbar()
-  renderStepper()
-})
-// 다른 탭에서 지우거나 바꾸면 이 탭의 화면도 다시 그린다
-onExternalChange(() => render())
-
-renderFooter()
-// 고지 문구가 엔진 상태(AI 엔진 사용 여부)에 따라 달라지므로, 첫 화면은 서버 상태를 잠깐 기다렸다 그린다
-const firstStatus = refreshStatus()
-let statusArrived = false
-firstStatus.then(() => {
-  statusArrived = true
-})
-await Promise.race([firstStatus, new Promise((resolve) => setTimeout(resolve, 2500))])
-const renderedWithStatus = statusArrived
-render()
-firstStatus.then((status) => {
-  if (!status) {
-    toast('서버 상태를 확인하지 못했어요. 서버가 켜져 있는지 확인해 주세요.', { type: 'error', ms: 5000 })
-    return
+/** 다른 페이지의 프레임(iframe) 안에서 열렸는지. 바깥 창을 볼 수 없으면 프레임 안으로 본다. */
+function isFramed() {
+  try {
+    return window.top !== window.self
+  } catch {
+    return true
   }
-  // 상태가 늦게 왔으면 안내 문구가 맞도록 한 번 다시 그린다(입력 중인 내용과 초점은 유지된다)
-  if (!renderedWithStatus) render()
-})
+}
+
+/** 프레임 안에서는 앱을 띄우지 않고 직접 열 수 있는 링크만 보여 준다(클릭재킹 방지) */
+function renderFramedNotice() {
+  document.getElementById('stepper').hidden = true
+  mount(
+    document.getElementById('main'),
+    h(
+      'div',
+      { class: 'wrap' },
+      h(
+        'div',
+        { class: 'notice danger' },
+        icon('alert'),
+        h('p', null, '안전을 위해 이 데모는 다른 페이지 안에서는 열리지 않아요. ', h('a', { href: location.href, target: '_blank', rel: 'noopener noreferrer' }, '새 창에서 직접 열기')),
+      ),
+    ),
+  )
+}
+
+// GitHub Pages는 X-Frame-Options·frame-ancestors 헤더를 보낼 수 없어(<meta> CSP의 frame-ancestors는 무시된다), 정적 데모는 스스로 프레임 안 실행을 막는다
+if (IS_STATIC && isFramed()) {
+  renderFramedNotice()
+} else {
+  window.addEventListener('hashchange', render)
+  subscribe(() => {
+    renderTopbar()
+    renderStepper()
+  })
+  // 다른 탭에서 지우거나 바꾸면 이 탭의 화면도 다시 그린다
+  onExternalChange(() => render())
+
+  renderFooter()
+  // 고지 문구가 엔진 상태(AI 엔진 사용 여부)에 따라 달라지므로, 첫 화면은 서버 상태를 잠깐 기다렸다 그린다
+  const firstStatus = refreshStatus()
+  let statusArrived = false
+  firstStatus.then(() => {
+    statusArrived = true
+  })
+  await Promise.race([firstStatus, new Promise((resolve) => setTimeout(resolve, 2500))])
+  const renderedWithStatus = statusArrived
+  render()
+  firstStatus.then((status) => {
+    if (!status) {
+      toast(IS_STATIC ? '데모 데이터를 불러오지 못했어요. 새로 고침해 주세요.' : '서버 상태를 확인하지 못했어요. 서버가 켜져 있는지 확인해 주세요.', { type: 'error', ms: 5000 })
+      return
+    }
+    // 상태가 늦게 왔으면 안내 문구가 맞도록 한 번 다시 그린다(입력 중인 내용과 초점은 유지된다)
+    if (!renderedWithStatus) render()
+  })
+}

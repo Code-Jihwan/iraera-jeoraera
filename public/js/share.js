@@ -1,11 +1,11 @@
 // 공유 창과 신고 창. 결과 화면과 보관함이 함께 쓴다.
-import { h, icon } from '/js/dom.js'
-import { getState } from '/js/store.js'
-import { api, sendEvent } from '/js/api.js'
-import { toast, openModal, copyText } from '/js/ui.js'
-import { AI_MARK, REPORT_REASONS } from '/shared/constants.js'
-import { drawShareCard, canvasToBlob } from '/js/share-card.js'
-import { shareSuffix, retentionDays } from '/js/notices.js'
+import { h, icon } from './dom.js'
+import { getState } from './store.js'
+import { api, sendEvent } from './api.js'
+import { toast, openModal, copyText } from './ui.js'
+import { AI_MARK, REPORT_REASONS } from '../shared/constants.js'
+import { drawShareCard, canvasToBlob } from './share-card.js'
+import { isStaticHosting, shareSuffix, retentionDays } from './notices.js'
 
 /**
  * @param {{ text:string, examples:string[], requestId:string, candidateId:string, technique?:string, trendKeyword:string, serviceName:string }} item
@@ -96,6 +96,8 @@ export function openShareModal(item) {
  * @param {object|null} [status] 서버 상태(신고 보관 기간 안내용)
  */
 export function openReportModal(item, onReported, status = null) {
+  // GitHub Pages 정적 데모에는 운영 서버가 없어 신고가 누구에게도 전달되지 않는다 — 화면은 그대로 두고 그 사실만 알린다
+  const isStatic = isStaticHosting(status)
   let reason = ''
   let sending = false
   const submit = async (e) => {
@@ -121,7 +123,7 @@ export function openReportModal(item, onReported, status = null) {
         note,
       })
       close()
-      toast('신고를 접수했어요. 이 문구는 목록에서 뺐어요.', { type: 'ok' })
+      toast(isStatic ? '이 문구를 목록에서 뺐어요. 데모라 신고 내용은 누구에게도 전달되지 않아요.' : '신고를 접수했어요. 이 문구는 목록에서 뺐어요.', { type: 'ok' })
       onReported()
     } catch (err) {
       toast(err.message, { type: 'error' })
@@ -156,7 +158,9 @@ export function openReportModal(item, onReported, status = null) {
         ),
       ),
       h('div', { class: 'field' }, h('label', { for: 'report-note' }, '덧붙일 말 (선택)'), h('input', { class: 'input', id: 'report-note', type: 'text', maxLength: 200, autocomplete: 'off' })),
-      h('p', { class: 'tiny muted' }, `신고한 문구, 사유, 덧붙인 말은 검토를 위해 서버에 ${retentionDays(status).reports}일 동안 보관돼요(연락처 같은 부분은 가려서 저장). 내 말투 프로필은 함께 보내지 않아요.`),
+      isStatic
+        ? h('p', { class: 'tiny muted' }, '이 데모에는 운영 서버가 없어 신고 내용은 누구에게도 전달되지 않아요. 신고하면 이 기기에서만 이 문구를 목록에서 빼요.')
+        : h('p', { class: 'tiny muted' }, `신고한 문구, 사유, 덧붙인 말은 검토를 위해 서버에 ${retentionDays(status).reports}일 동안 보관돼요(연락처 같은 부분은 가려서 저장). 내 말투 프로필은 함께 보내지 않아요.`),
     ],
     actions: [h('button', { class: 'btn outline', type: 'button', onClick: () => close() }, '취소'), h('button', { class: 'btn danger', type: 'button', onClick: submit }, icon('flag'), '신고하기')],
   })

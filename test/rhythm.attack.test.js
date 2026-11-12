@@ -5,13 +5,14 @@ import assert from 'node:assert/strict'
 import { registerHooks } from 'node:module'
 import { analyzeRhythm, TEMPO_THRESHOLDS } from '../shared/rhythm.js'
 
-// 브라우저에서 '/shared/…'로 불러오는 경로를 프로젝트 폴더로 돌린다
+// 브라우저에서는 public/js/ 옆의 '../shared/…'가 서버의 /shared/로 이어진다. Node에서는 그 경로를 프로젝트의 shared/ 폴더로 돌린다.
 const ROOT = new URL('../', import.meta.url)
+const PUBLIC_SHARED = new URL('./public/shared/', ROOT).href
 registerHooks({
   resolve(specifier, context, next) {
-    if (specifier.startsWith('/shared/') || specifier.startsWith('/js/')) {
-      const local = specifier.startsWith('/js/') ? './public' + specifier : '.' + specifier
-      return next(new URL(local, ROOT).href, context)
+    if ((specifier.startsWith('./') || specifier.startsWith('../')) && context.parentURL) {
+      const target = new URL(specifier, context.parentURL).href
+      if (target.startsWith(PUBLIC_SHARED)) return next(new URL(`./shared/${target.slice(PUBLIC_SHARED.length)}`, ROOT).href, context)
     }
     return next(specifier, context)
   },

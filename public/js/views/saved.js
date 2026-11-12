@@ -1,10 +1,10 @@
 // 보관함: 저장한 유행어를 다시 보고 공유하거나 지운다. 이 기기에만 저장된다.
-import { h, icon, formatDateTime } from '/js/dom.js'
-import { getState, removeSaved } from '/js/store.js'
-import { sendEvent } from '/js/api.js'
-import { toast } from '/js/ui.js'
-import { AI_MARK, TECHNIQUES } from '/shared/constants.js'
-import { openShareModal } from '/js/share.js'
+import { h, icon, formatDateTime } from '../dom.js'
+import { getState, removeSaved } from '../store.js'
+import { sendEvent } from '../api.js'
+import { toast } from '../ui.js'
+import { AI_MARK, TECHNIQUES } from '../../shared/constants.js'
+import { openShareModal } from '../share.js'
 
 export function savedView(ctx) {
   const s = getState()

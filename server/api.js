@@ -1,7 +1,8 @@
 // API 라우트. 사용자 앱이 부르는 것과 운영 화면이 부르는 것(/api/ops/*)으로 나뉜다.
 import { HttpError } from './http.js'
 import { publicConfig } from './config.js'
-import { CONSENT_VERSION, SAFETY_CATEGORIES } from '../shared/constants.js'
+import { CONSENT_VERSION } from '../shared/constants.js'
+import { blockedTrendError, generateErrorResponse, trendCheckErrorResponse } from '../shared/api-messages.js'
 
 /** 브라우저에는 규칙 엔진 힌트를 빼고 보낸다. */
 function publicTrend(trend) {
@@ -10,7 +11,8 @@ function publicTrend(trend) {
   return rest
 }
 
-const categoryLabels = (categories) => (Array.isArray(categories) ? categories.map((c) => SAFETY_CATEGORIES[c] || SAFETY_CATEGORIES.other) : [])
+/** 사용자에게 보여 줄 오류 문구는 shared/api-messages.js에 모아 정적 배포와 함께 쓴다. */
+const httpError = ({ status, message, code }) => new HttpError(status, message, code)
 
 /**
  * @param {ReturnType<import('./http.js').createApp>} app
@@ -69,13 +71,11 @@ export function registerRoutes(app, { config, trendStore, pipeline, generator, l
     try {
       result = await generator.checkCustomTrend(ctx.body)
     } catch (err) {
-      if (err instanceof TypeError) throw new HttpError(400, '트렌드 키워드를 입력해 주세요.', 'bad_request')
+      const known = trendCheckErrorResponse(err)
+      if (known) throw httpError(known)
       throw err
     }
-    if (!result.ok) {
-      const labels = categoryLabels(result.categories)
-      throw new HttpError(422, `이 키워드는 쓸 수 없어요${labels.length ? ` (${labels.join(', ')})` : ''}. 다른 말로 바꿔 주세요.`, 'blocked_input')
-    }
+    if (!result.ok) throw httpError(blockedTrendError(result.categories))
     return { trend: publicTrend(result.trend) }
   })
 
@@ -94,12 +94,8 @@ export function registerRoutes(app, { config, trendStore, pipeline, generator, l
         feedback: body.feedback,
       })
     } catch (err) {
-      if (err?.code === 'trend_not_found') throw new HttpError(404, '고른 트렌드를 찾을 수 없어요. 목록을 새로 고친 뒤 다시 골라 주세요.', 'trend_not_found')
-      if (err?.code === 'blocked_input') {
-        const labels = categoryLabels(err.categories)
-        throw new HttpError(422, `입력한 말에 쓸 수 없는 표현이 있어요${labels.length ? ` (${labels.join(', ')})` : ''}. 바꿔서 다시 시도해 주세요.`, 'blocked_input')
-      }
-      if (err instanceof TypeError) throw new HttpError(400, '요청 형식이 올바르지 않습니다.', 'bad_request')
+      const known = generateErrorResponse(err)
+      if (known) throw httpError(known)
       throw err
     }
     // 지표용 집계만 남긴다(문구·프로필 내용은 남기지 않는다). 기록 실패가 응답을 막지 않게 한다.

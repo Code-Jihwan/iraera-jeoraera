@@ -1,12 +1,12 @@
 // 4단계 · 유행어 생성: 고른 트렌드와 내 말투를 확인하고, 쓰임새와 맛을 정해 후보를 만든다.
-import { h, icon } from '/js/dom.js'
-import { getState, update, rememberShown } from '/js/store.js'
-import { api } from '/js/api.js'
-import { toast } from '/js/ui.js'
-import { LIMITS, SITUATIONS, SPICE_LEVELS } from '/shared/constants.js'
-import { profileToPayload } from '/shared/style-analyzer.js'
-import { findTrend, loadTrends } from '/js/views/trends.js'
-import { aiNoticeBox } from '/js/notices.js'
+import { h, icon } from '../dom.js'
+import { getState, update, rememberShown } from '../store.js'
+import { api } from '../api.js'
+import { toast } from '../ui.js'
+import { LIMITS, SITUATIONS, SPICE_LEVELS } from '../../shared/constants.js'
+import { profileToPayload } from '../../shared/style-analyzer.js'
+import { findTrend, loadTrends } from './trends.js'
+import { aiNoticeBox } from '../notices.js'
 
 const PIPELINE = ['프롬프트 구성', '유행어 후보 생성', '안전 필터', '랭킹']
 const run = { busy: false, step: -1, auto: false }

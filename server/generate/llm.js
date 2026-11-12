@@ -1,5 +1,9 @@
 // Claude 호출 계층. 공식 SDK(@anthropic-ai/sdk)를 늦게 불러와서, 패키지가 없어도 서버는 뜬다.
 // 기록에는 용도·모델·오류 종류·걸린 시간·토큰 수만 남긴다. 요청 본문이나 사용자 글은 남기지 않는다.
+import { LlmError } from './llm-error.js'
+
+// 오류 클래스는 llm-error.js에 두고, 예전처럼 여기서도 꺼내 쓸 수 있게 다시 내보낸다
+export { LlmError }
 
 /** 거절을 다른 모델이 이어받게 하는 서버 측 대체(fallbacks: "default")용 베타 헤더 */
 const FALLBACK_BETA = 'server-side-fallback-2026-07-01'
@@ -8,20 +12,6 @@ const DEFAULT_MAX_TOKENS = 16000
 const MAX_TOKENS_LIMIT = 32000
 const MAX_PROMPT_CHARS = 200_000
 const PURPOSE_SHAPE = /^[a-z][a-z_-]{0,23}$/
-
-const ERROR_MESSAGES = Object.freeze({
-  disabled: 'AI 엔진이 꺼져 있습니다.',
-  unavailable: 'AI 엔진을 불러오지 못했습니다.',
-  auth: 'AI 엔진 인증에 실패했습니다.',
-  daily_cap: '오늘의 AI 엔진 호출 한도에 도달했습니다.',
-  rate_limit: 'AI 엔진 요청 한도에 걸렸습니다.',
-  bad_request: 'AI 엔진이 요청을 받아들이지 않았습니다.',
-  network: 'AI 엔진에 연결하지 못했습니다.',
-  api: 'AI 엔진 호출에 실패했습니다.',
-  refusal: 'AI 엔진이 요청을 거절했습니다.',
-  max_tokens: 'AI 엔진 응답이 길이 한도에서 끊겼습니다.',
-  bad_json: 'AI 엔진 응답이 JSON 형식이 아닙니다.',
-})
 
 /** SDK의 오류 클래스 → 오류 종류. 하위 클래스가 먼저 걸리도록 구체적인 것부터 둔다. */
 const SDK_ERROR_KINDS = [
@@ -38,15 +28,6 @@ const STOP_REASON_KINDS = new Map([
   ['refusal', 'refusal'],
   ['max_tokens', 'max_tokens'],
 ])
-
-export class LlmError extends Error {
-  /** @param {string} kind 오류 종류 (auth, rate_limit, refusal, bad_json …) */
-  constructor(kind) {
-    super(Object.hasOwn(ERROR_MESSAGES, kind) ? ERROR_MESSAGES[kind] : ERROR_MESSAGES.api)
-    this.name = 'LlmError'
-    this.kind = kind
-  }
-}
 
 function kindOf(err, sdk) {
   if (err instanceof LlmError) return err.kind

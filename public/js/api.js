@@ -1,12 +1,10 @@
 // 서버 API 호출. 오류는 사용자에게 보여 줄 수 있는 메시지를 가진 ApiError로 통일한다.
+// 정적 배포(GitHub Pages)에서는 서버가 없으므로 같은 모양의 응답을 브라우저 안 백엔드(static-backend.js)가 만든다.
+import { RUNTIME } from './runtime.js'
+import { ApiError } from './api-error.js'
 
-export class ApiError extends Error {
-  constructor(message, { status = 0, code = 'error' } = {}) {
-    super(message)
-    this.status = status
-    this.code = code
-  }
-}
+// 예전처럼 api.js에서 ApiError를 꺼내 쓸 수 있게 다시 내보낸다
+export { ApiError }
 
 async function request(path, { method = 'GET', body, headers = {}, timeoutMs = 20000 } = {}) {
   const controller = new AbortController()
@@ -39,7 +37,7 @@ async function request(path, { method = 'GET', body, headers = {}, timeoutMs = 2
   return data
 }
 
-export const api = {
+const serverApi = {
   status: () => request('/api/status'),
   trends: () => request('/api/trends'),
   checkTrend: (payload) => request('/api/trends/check', { method: 'POST', body: payload }),
@@ -48,6 +46,32 @@ export const api = {
   event: (payload) => request('/api/events', { method: 'POST', body: payload }),
   report: (payload) => request('/api/report', { method: 'POST', body: payload }),
 }
+
+let staticBackend = null
+
+/** 브라우저 안 백엔드는 정적 모드에서 처음 부를 때만 불러온다. 불러오지 못하면 다음 호출 때 다시 시도한다. */
+function loadStaticBackend() {
+  staticBackend ??= import('./static-backend.js')
+    .then((mod) => mod.createStaticBackend())
+    .catch(() => {
+      staticBackend = null
+      throw new ApiError('데모 엔진을 불러오지 못했어요. 인터넷 연결을 확인한 뒤 새로 고침해 주세요.', { code: 'network' })
+    })
+  return staticBackend
+}
+
+const viaStatic = (method) => async (payload) => (await loadStaticBackend())[method](payload)
+
+const staticApi = {
+  status: viaStatic('status'),
+  trends: viaStatic('trends'),
+  checkTrend: viaStatic('checkTrend'),
+  generate: viaStatic('generate'),
+  event: viaStatic('event'),
+  report: viaStatic('report'),
+}
+
+export const api = RUNTIME.mode === 'static' ? staticApi : serverApi
 
 /** 반응 기록은 실패해도 화면 흐름을 막지 않는다. */
 export function sendEvent(payload) {

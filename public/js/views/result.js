@@ -1,13 +1,13 @@
 // 5단계 · 반응·공유: 후보와 쓰임새 예문을 보고 좋아요·별로예요로 반응하고, 저장·공유·신고한다.
 // 반응은 이 기기에 요약으로 쌓여 다음 생성과 랭킹에 반영된다.
-import { h, icon } from '/js/dom.js'
-import { getState, update, applyReaction, toggleSaved, isSaved, candidateKey } from '/js/store.js'
-import { sendEvent } from '/js/api.js'
-import { toast } from '/js/ui.js'
-import { AI_MARK, TECHNIQUES } from '/shared/constants.js'
-import { resultMarkText } from '/js/notices.js'
-import { openShareModal, openReportModal } from '/js/share.js'
-import { requestAutoGenerate } from '/js/views/generate.js'
+import { h, icon } from '../dom.js'
+import { getState, update, applyReaction, toggleSaved, isSaved, candidateKey } from '../store.js'
+import { sendEvent } from '../api.js'
+import { toast } from '../ui.js'
+import { AI_MARK, TECHNIQUES } from '../../shared/constants.js'
+import { resultMarkText, isStaticHosting } from '../notices.js'
+import { openShareModal, openReportModal } from '../share.js'
+import { requestAutoGenerate } from './generate.js'
 
 const RATING_LABELS = ['전혀 아니에요', '아닌 편', '보통', '비슷해요', '완전 내 말투']
 
@@ -44,7 +44,8 @@ export function resultView(ctx) {
   function rate(value) {
     update((st) => ({ ratings: { ...st.ratings, [result.requestId]: value } }))
     sendEvent({ anonId: s.anonId, type: 'rating', requestId: result.requestId, value })
-    toast('평가 고마워요. 서비스 개선 지표에 반영돼요.', { type: 'ok' })
+    // 정적 데모는 평가를 어디로도 보내지 않으므로 지표에 반영된다고 말하지 않는다
+    toast(isStaticHosting(ctx.status) ? '평가 고마워요. 이 데모에서는 평가를 이 기기에만 남겨요.' : '평가 고마워요. 서비스 개선 지표에 반영돼요.', { type: 'ok' })
     ctx.rerender()
   }
 

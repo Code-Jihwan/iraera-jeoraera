@@ -1,10 +1,10 @@
 // 내 데이터: 무엇이 어디에 저장돼 있는지 보여 주고, 열람·삭제·동의 철회를 한 화면에서 할 수 있게 한다.
-import { h, icon, formatDateTime } from '/js/dom.js'
-import { getState, update, clearProfile, resetAll, hasConsent, hasVoiceConsent, isStorageAvailable, engineUsesLlm } from '/js/store.js'
-import { toast, confirmDialog } from '/js/ui.js'
-import { isUsableProfile, removeVoiceData } from '/shared/style-analyzer.js'
-import { discardVoiceDraft, resetRegisterDraft } from '/js/views/register.js'
-import { retentionDays } from '/js/notices.js'
+import { h, icon, formatDateTime } from '../dom.js'
+import { getState, update, clearProfile, resetAll, hasConsent, hasVoiceConsent, isStorageAvailable, engineUsesLlm } from '../store.js'
+import { toast, confirmDialog } from '../ui.js'
+import { isUsableProfile, removeVoiceData } from '../../shared/style-analyzer.js'
+import { discardVoiceDraft, resetRegisterDraft } from './register.js'
+import { hostingNotice, isStaticHosting, retentionDays } from '../notices.js'
 
 export function dataView(ctx) {
   const s = getState()
@@ -12,6 +12,7 @@ export function dataView(ctx) {
   const voiceOn = consented && hasVoiceConsent(s)
   const profile = s.profile
   const engine = ctx.status?.engine
+  const isStatic = isStaticHosting(ctx.status)
 
   async function withdrawVoice() {
     const yes = await confirmDialog({
@@ -101,7 +102,7 @@ export function dataView(ctx) {
                   ? `철회함 · ${formatDateTime(s.consent.voiceWithdrawnAt)}`
                   : '동의하지 않음(선택 항목)',
             ),
-            row('국외 이전 안내', consented ? (s.consent.transfer === 'llm' ? '확인함(AI 엔진 사용 안내 포함)' : '해당 없음(기본 엔진)') : '확인 전'),
+            row('국외 이전 안내', consented ? (s.consent.transfer === 'llm' ? '확인함(AI 엔진 사용 안내 포함)' : isStatic ? '해당 없음(브라우저 안에서만 처리)' : '해당 없음(기본 엔진)') : '확인 전'),
             row('만 14세 이상', consented ? '확인함' : '확인 전'),
           ),
         ),
@@ -150,7 +151,31 @@ export function dataView(ctx) {
         h('button', { class: 'btn danger small', type: 'button', onClick: deleteEverything }, icon('trash'), '동의 철회 · 전부 지우기'),
       ),
     ),
-    h(
+    isStatic ? staticOutboundSection() : serverSection(),
+  )
+
+  /** 정적 데모(GitHub Pages): 서버가 없어 밖으로 보내거나 남기는 것이 없다 */
+  function staticOutboundSection() {
+    return h(
+      'section',
+      { class: 'card stack', 'aria-labelledby': 'data-server' },
+      h('h2', { class: 'card-title', id: 'data-server' }, '밖으로 보내는 것'),
+      h(
+        'ul',
+        { class: 'stack-s small' },
+        h('li', null, '이 데모는 GitHub Pages로 제공하는 정적 사이트라 서비스 서버가 없어요. 유행어도 이 브라우저 안에서 규칙 기반 기본 엔진으로 만들어요.'),
+        h('li', null, '입력한 글, 음성 분석 결과, 말투 프로필, 만든 결과, 반응, 신고는 어디로도 보내지 않아요. 입력한 원문은 분석 직후 지우고, 프로필·보관함·결과·반응은 이 브라우저 저장 공간에만 남아요.'),
+        h('li', null, '신고를 해도 이 기기에서 그 문구를 목록에서 뺄 뿐, 신고 내용이 누구에게도 전달되지 않아요.'),
+        h('li', null, '받아쓰기는 브라우저의 음성 인식 기능을 써요. 브라우저에 따라 브라우저 제조사의 음성 인식 서비스로 음성이 전송될 수 있어요.'),
+      ),
+      hostingNotice(),
+      h('p', { class: 'tiny muted' }, '‘전부 지우기’를 하면 이 브라우저에 저장된 것이 모두 지워지고, 익명 ID도 새로 바뀌어요.'),
+      h('a', { class: 'linkish', href: '#/policy' }, '이용 안내와 개인정보 처리 내용 자세히 보기'),
+    )
+  }
+
+  function serverSection() {
+    return h(
       'section',
       { class: 'card stack', 'aria-labelledby': 'data-server' },
       h('h2', { class: 'card-title', id: 'data-server' }, '서버로 가는 것과 서버에 남는 것'),
@@ -174,6 +199,6 @@ export function dataView(ctx) {
       ),
       h('p', { class: 'tiny muted' }, '서버에 남은 기록은 이 기기의 익명 ID로만 묶여 있어요. ‘전부 지우기’를 하면 이 기기의 익명 ID가 새로 바뀌어 예전 기록과 이어지지 않아요.'),
       h('a', { class: 'linkish', href: '#/policy' }, '이용 안내와 개인정보 처리 내용 자세히 보기'),
-    ),
-  )
+    )
+  }
 }

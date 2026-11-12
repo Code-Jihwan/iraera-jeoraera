@@ -1,15 +1,15 @@
 // 1단계 · 말투 등록: 고지와 동의 → 내가 쓴 글(붙여넣기·카카오톡 파일) → 목소리 녹음(선택) → 분석
 // 붙여 넣은 원문·대화 파일·녹음 결과는 이 모듈의 변수에만 잠깐 두고, 분석이 끝나면 지운다.
-import { h, icon } from '/js/dom.js'
-import { getState, update, hasConsent, hasVoiceConsent, consentNeedsRenewal, engineUsesLlm } from '/js/store.js'
-import { toast, confirmDialog } from '/js/ui.js'
-import { CONSENT_VERSION, LIMITS } from '/shared/constants.js'
-import { charLength } from '/shared/hangul.js'
-import { analyzeStyle, splitUtterances, isUsableProfile, mergeProfiles } from '/shared/style-analyzer.js'
-import { parseChatExport, extractOwnUtterances } from '/shared/kakao-parser.js'
-import { VoiceSession, voiceSupport } from '/js/voice.js'
-import { SAMPLE_PERSONAS } from '/js/samples.js'
-import { AGE_HELP, AGE_LABEL, inputCaution, textConsentTable, transferNotice, voiceConsentTable, voiceExtraNotice } from '/js/notices.js'
+import { h, icon } from '../dom.js'
+import { getState, update, hasConsent, hasVoiceConsent, consentNeedsRenewal, engineUsesLlm } from '../store.js'
+import { toast, confirmDialog } from '../ui.js'
+import { CONSENT_VERSION, LIMITS } from '../../shared/constants.js'
+import { charLength } from '../../shared/hangul.js'
+import { analyzeStyle, splitUtterances, isUsableProfile, mergeProfiles } from '../../shared/style-analyzer.js'
+import { parseChatExport, extractOwnUtterances } from '../../shared/kakao-parser.js'
+import { VoiceSession, voiceSupport } from '../voice.js'
+import { SAMPLE_PERSONAS } from '../samples.js'
+import { AGE_HELP, AGE_LABEL, hostingNotice, inputCaution, isStaticHosting, textConsentTable, transferNotice, voiceConsentTable, voiceExtraNotice } from '../notices.js'
 
 const MAX_FILE_BYTES = 10 * 1024 * 1024
 const LEVEL_BARS = 24
@@ -163,8 +163,9 @@ export function registerView(ctx) {
     if (!f.age14 || !f.text) return
     const prev = getState().consent
     const nowIso = new Date().toISOString()
-    // 서버 상태를 모르면 국외 이전 안내까지 보여 준 것으로 보고(보수적으로) 그 안내에 동의한 것으로 남긴다
-    const transfer = !ctx.status || engineUsesLlm(ctx.status.engine) ? 'llm' : 'local'
+    // 서버 상태를 모르면 국외 이전 안내까지 보여 준 것으로 보고(보수적으로) 그 안내에 동의한 것으로 남긴다.
+    // 정적 데모는 AI 엔진이 없어 국외 이전 안내가 해당되지 않는다.
+    const transfer = isStaticHosting(ctx.status) ? 'local' : !ctx.status || engineUsesLlm(ctx.status.engine) ? 'llm' : 'local'
     const sameText = Boolean(prev && prev.text && prev.version === CONSENT_VERSION && prev.transfer === transfer)
     update({
       consent: {
@@ -258,10 +259,13 @@ export function registerView(ctx) {
         title: '음성 말투 분석에 동의합니다',
         body: [voiceConsentTable(), voiceExtraNotice()],
       }),
-      // AI 엔진을 쓰는 서버에서는 국외 이전 안내를 접어 두지 않고 동의 화면에 그대로 보인다
-      !engine || engineUsesLlm(engine)
-        ? h('div', { class: 'stack-s' }, h('p', { class: 'label' }, '프로필 요약이 어디로 전송되나요?'), transferNotice(engine))
-        : h('details', { class: 'fold' }, h('summary', null, '프로필 요약이 어디로 전송되나요?'), h('div', { class: 'fold-body' }, transferNotice(engine))),
+      // AI 엔진을 쓰는 서버에서는 국외 이전 안내를 접어 두지 않고 동의 화면에 그대로 보인다.
+      // 정적 데모는 어디에서 처리하는지와 GitHub Pages 호스팅 안내를 펼쳐 둔다.
+      isStaticHosting(ctx.status)
+        ? h('div', { class: 'stack-s' }, h('p', { class: 'label' }, '어디에서 처리하나요?'), transferNotice(engine, ctx.status), hostingNotice())
+        : !engine || engineUsesLlm(engine)
+          ? h('div', { class: 'stack-s' }, h('p', { class: 'label' }, '프로필 요약이 어디로 전송되나요?'), transferNotice(engine))
+          : h('details', { class: 'fold' }, h('summary', null, '프로필 요약이 어디로 전송되나요?'), h('div', { class: 'fold-body' }, transferNotice(engine))),
       h(
         'div',
         { class: 'row end' },

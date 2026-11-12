@@ -1,9 +1,9 @@
 // 운영 화면: 성공 지표 네 가지, 트렌드 수집 상태, 사람 검수, 신고 목록.
-import { h, mount, icon, formatDateTime, formatNumber } from '/js/dom.js'
-import { opsRequest, ApiError } from '/js/api.js'
-import { toast } from '/js/ui.js'
-import { REPORT_REASONS, TECHNIQUES, TREND_CATEGORIES } from '/shared/constants.js'
-import { josa } from '/shared/hangul.js'
+import { h, mount, icon, formatDateTime, formatNumber } from './dom.js'
+import { opsRequest, ApiError } from './api.js'
+import { toast } from './ui.js'
+import { REPORT_REASONS, TECHNIQUES, TREND_CATEGORIES } from '../shared/constants.js'
+import { josa } from '../shared/hangul.js'
 
 const TOKEN_KEY = 'my-catchphrase.ops-token'
 const main = document.getElementById('main')

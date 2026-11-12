@@ -1,10 +1,11 @@
 // 3단계 · 트렌드 고르기: 오늘의 이슈·밈 목록에서 하나를 고른다. 출처 링크와 뜻 요약을 함께 보여 준다.
-import { h, icon, formatDateTime, mount } from '/js/dom.js'
-import { getState, update } from '/js/store.js'
-import { api } from '/js/api.js'
-import { toast } from '/js/ui.js'
-import { LIMITS } from '/shared/constants.js'
-import { josa } from '/shared/hangul.js'
+import { h, icon, formatDateTime, mount } from '../dom.js'
+import { getState, update } from '../store.js'
+import { api } from '../api.js'
+import { toast } from '../ui.js'
+import { LIMITS } from '../../shared/constants.js'
+import { josa } from '../../shared/hangul.js'
+import { isStaticHosting } from '../notices.js'
 
 // 화면을 오갈 때마다 다시 받지 않도록 잠깐 기억해 둔다
 const cache = { items: null, status: null, at: 0, loading: false, error: '' }
@@ -163,7 +164,9 @@ export function trendsView(ctx) {
     const st = cache.status
     if (!st) return null
     const bits = []
-    if (st.youtubeEnabled) {
+    if (isStaticHosting(ctx.status)) {
+      bits.push('이 데모는 빌드할 때 함께 묶은 예시 데이터만 써요(2026-11-11에 공개 기사·사전으로 뜻과 유래를 확인해 정리). 실시간 순위가 아니에요.')
+    } else if (st.youtubeEnabled) {
       bits.push(`YouTube 인기 차트 수집 중${st.lastRunAt ? ` · 마지막 수집 ${formatDateTime(st.lastRunAt)}` : ''}`)
       if (st.pending > 0) bits.push(`검수 대기 ${st.pending}건(운영 화면에서 승인하면 여기에 나타나요)`)
     } else {

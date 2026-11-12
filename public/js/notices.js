@@ -1,12 +1,23 @@
 // 고지·동의 문구. 등록 화면과 이용 안내 화면이 같은 내용을 쓴다.
 // ※ 법률 검토 전 초안이다. 실제 처리 내용이 바뀌면 여기와 CONSENT_VERSION을 함께 고친다.
-import { h, icon } from '/js/dom.js'
-import { engineUsesLlm } from '/js/store.js'
-import { AI_MARK, MIN_AGE, RETENTION_DEFAULT_DAYS } from '/shared/constants.js'
+import { h, icon } from './dom.js'
+import { engineUsesLlm } from './store.js'
+import { AI_MARK, MIN_AGE, RETENTION_DEFAULT_DAYS } from '../shared/constants.js'
+import { RUNTIME } from './runtime.js'
 
 const strong = (text) => h('strong', null, text)
 
-/** 서버가 알려 준 보관 기간(없으면 기본값) */
+export const GITHUB_PRIVACY_URL = 'https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement'
+
+/** 서버 없이 GitHub Pages 같은 정적 호스팅으로 배포된 데모인지. 빌드 표시(RUNTIME)를 먼저 보고, 상태 응답도 함께 본다. */
+export function isStaticHosting(status = null) {
+  return RUNTIME.mode === 'static' || status?.hosting === 'static'
+}
+
+/**
+ * 서버가 알려 준 보관 기간(없으면 기본값).
+ * 정적 데모는 retention이 null이다(서버에 남는 기록이 없다) — 그때도 숫자를 돌려주지만, 정적 모드 문구는 이 값을 쓰지 않는다.
+ */
 export function retentionDays(status) {
   const r = status?.retention
   return {
@@ -15,8 +26,9 @@ export function retentionDays(status) {
   }
 }
 
-/** 서버 상태를 모르면 AI 엔진이 켜진 경우의 안내를 보여 준다(덜 알리는 쪽으로 틀리지 않게) */
+/** 서버 상태를 모르면 AI 엔진이 켜진 경우의 안내를 보여 준다(덜 알리는 쪽으로 틀리지 않게). 정적 데모는 AI 엔진을 쓰지 않는다. */
 function mayUseLlm(engine) {
+  if (isStaticHosting()) return false
   return !engine || engineUsesLlm(engine)
 }
 
@@ -43,6 +55,7 @@ function fourRowTable(rows) {
  * @param {object|null} [status] 서버 상태(보관 기간)
  */
 export function textConsentTable(engine = null, status = null) {
+  if (isStaticHosting(status)) return staticTextConsentTable()
   const days = retentionDays(status)
   return fourRowTable([
     ['목적', '내 말투 프로필 만들기, 프로필에 맞춘 유행어·예문 생성, 서비스 개선 지표 집계와 신고 검토'],
@@ -57,6 +70,27 @@ export function textConsentTable(engine = null, status = null) {
         ' 입력한 원문과 대화 파일은 분석 직후 지워요. 서버는 유행어를 만드는 동안에만 프로필 요약을 쓰고 저장하지 않아요. ',
         strong(`서버에는 생성·반응 기록(문구 내용 없이 종류·시각·요청 번호)을 익명 ID와 함께 ${days.events}일, 신고한 문구·사유·덧붙인 말을 ${days.reports}일 동안 보관한 뒤 지워요.`),
         mayUseLlm(engine) ? ' 유행어를 만들 때 프로필 요약이 생성형 AI 사업자에게 전송돼요(아래 국외 이전 안내).' : '',
+      ],
+    ],
+    ['거부할 권리', '동의하지 않을 수 있어요. 다만 서비스에 꼭 필요한 항목이라, 동의하지 않으면 이용할 수 없어요.'],
+  ])
+}
+
+/** 정적 데모(GitHub Pages)의 글 말투 분석 동의 표: 서버가 없어 아무것도 밖으로 보내지 않는다. */
+function staticTextConsentTable() {
+  return fourRowTable([
+    ['목적', '내 말투 프로필 만들기, 프로필에 맞춘 유행어·예문 생성'],
+    [
+      '항목',
+      '내가 직접 입력한 글, 대화 파일에서 내가 보낸 메시지, 이를 분석해 만든 말투 프로필(자주 쓰는 어미·표현·추임새, 웃음·기호 습관, 대표 문장), 고른 트렌드와 넣고 싶은 말, 반응 기록(좋아요·저장·공유·평가·신고), 이 기기의 익명 ID',
+    ],
+    [
+      '보유·이용 기간',
+      [
+        strong('말투 프로필, 보관함, 만든 결과, 반응 기록은 모두 이 기기(브라우저)에만 두고, 지우거나 동의를 철회할 때까지 보관해요.'),
+        ' 입력한 원문과 대화 파일은 분석 직후 지워요. ',
+        strong('이 데모는 서버 없이 동작해서 유행어도 이 브라우저 안에서 만들어요. 입력한 글, 음성 분석 결과, 프로필, 결과, 반응, 신고는 이 데모가 어떤 서버로도 보내지 않아요.'),
+        ' 받아쓰기만은 브라우저의 음성 인식 기능을 써요(음성 말투 분석 안내 참고).',
       ],
     ],
     ['거부할 권리', '동의하지 않을 수 있어요. 다만 서비스에 꼭 필요한 항목이라, 동의하지 않으면 이용할 수 없어요.'],
@@ -85,8 +119,37 @@ export function voiceExtraNotice() {
   )
 }
 
+/** 정적 데모의 호스팅 안내: 사이트 파일은 GitHub Pages가 내려 주고, 접속 기록은 GitHub가 처리할 수 있다. */
+export function hostingNotice() {
+  return h(
+    'div',
+    { class: 'notice' },
+    icon('info'),
+    h(
+      'p',
+      { class: 'small' },
+      strong('GitHub Pages 호스팅 안내: '),
+      '이 사이트의 파일은 GitHub Pages가 제공해요. GitHub는 서비스 운영과 보안을 위해 IP 주소 같은 접속 기록을 처리할 수 있으며, 이는 ',
+      h('a', { href: GITHUB_PRIVACY_URL, target: '_blank', rel: 'noopener noreferrer' }, 'GitHub 개인정보처리방침', h('span', { class: 'sr-only' }, '(새 창)')),
+      '을 따라요. 이 데모가 따로 모으는 정보는 없어요.',
+    ),
+  )
+}
+
 /** 프로필 요약이 어디로 가는지 — 엔진 상태에 따라 다르게 알린다. */
-export function transferNotice(engine) {
+export function transferNotice(engine, status = null) {
+  if (isStaticHosting(status)) {
+    return h(
+      'div',
+      { class: 'stack-s small' },
+      h(
+        'p',
+        null,
+        '말투 분석과 유행어 생성이 모두 이 브라우저 안에서 규칙 기반 기본 엔진으로 이루어져요. 프로필 요약, 고른 트렌드, 넣고 싶은 말, 반응은 어떤 서버나 외부 AI 사업자에게도 전송되지 않아요.',
+      ),
+      h('p', { class: 'muted' }, '이 GitHub Pages 데모는 API 키를 브라우저에 둘 수 없어 생성형 AI 엔진을 쓰지 않아요.'),
+    )
+  }
   const llm = mayUseLlm(engine)
   return h(
     'div',
@@ -138,6 +201,7 @@ export function inputCaution() {
 
 /** 기본 엔진으로 돌 때 그 이유를 한 줄로 */
 export function localEngineLine(engine) {
+  if (isStaticHosting()) return '이 GitHub Pages 데모는 서버 없이 이 브라우저 안에서 규칙 기반 기본 엔진으로만 동작해요.'
   if (engine?.mode !== 'local') return null
   return engine.configured
     ? `AI 엔진이 설정돼 있지만 지금은 쓸 수 없어(${engine.reason || '원인 확인 중'}) 규칙 기반 기본 엔진으로 동작하고 있어요.`

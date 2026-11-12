@@ -1,5 +1,5 @@
 // 알림(토스트)과 모달.
-import { h, icon } from '/js/dom.js'
+import { h, icon } from './dom.js'
 
 export function toast(message, { type = 'info', ms = 3200 } = {}) {
   const root = document.getElementById('toast-root')

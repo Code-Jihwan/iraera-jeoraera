@@ -1,7 +1,7 @@
 // 첫 화면: 서비스 한 줄 정의, AI 기반 고지, 다섯 단계 미리 보기.
-import { h, icon } from '/js/dom.js'
-import { isUsableProfile } from '/shared/style-analyzer.js'
-import { localEngineLine } from '/js/notices.js'
+import { h, icon } from '../dom.js'
+import { isUsableProfile } from '../../shared/style-analyzer.js'
+import { isStaticHosting, localEngineLine } from '../notices.js'
 
 const STEP_PREVIEW = [
   { n: 1, title: '말투 등록', desc: '내가 쓴 글을 넣고, 원하면 목소리도 녹음해요.' },
@@ -107,6 +107,7 @@ export function startView(ctx) {
         h('li', null, '녹음한 목소리는 저장하지 않아요. 받아쓴 글과 말 빠르기 같은 수치만 남겨요.'),
         h('li', null, '카카오톡 대화 파일은 브라우저 안에서만 읽고, 내가 보낸 메시지만 써요.'),
         h('li', null, '만 14세 이상만 이용할 수 있어요.'),
+        isStaticHosting(ctx.status) ? h('li', null, '이 GitHub Pages 데모는 서버 없이 이 브라우저 안에서만 동작해요. 입력한 글과 프로필, 만든 결과는 어디로도 보내지 않아요.') : null,
       ),
       h('p', { class: 'small' }, h('a', { href: '#/policy' }, '이용 안내와 개인정보 처리 내용 자세히 보기')),
     ),

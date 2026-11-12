@@ -11,6 +11,8 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "collect": "node server/trends/run-collect.js",
+    "build:static": "node scripts/build-static.mjs",
+    "preview:static": "node scripts/preview-static.mjs",
     "test": "node --test"
   },
   "dependencies": {

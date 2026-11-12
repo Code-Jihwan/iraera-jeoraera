@@ -1,10 +1,11 @@
 // 2단계 · 말투 프로필: 자주 쓰는 표현·어미·추임새를 카드로 보여 주고, 사용자가 직접 고치거나 지울 수 있다.
-import { h, icon, formatDateTime } from '/js/dom.js'
-import { getState, update, clearProfile } from '/js/store.js'
-import { toast, confirmDialog } from '/js/ui.js'
-import { LIMITS, REGISTERS } from '/shared/constants.js'
-import { addItem, removeItem, summarizeProfile } from '/shared/style-analyzer.js'
-import { josa } from '/shared/hangul.js'
+import { h, icon, formatDateTime } from '../dom.js'
+import { getState, update, clearProfile } from '../store.js'
+import { toast, confirmDialog } from '../ui.js'
+import { LIMITS, REGISTERS } from '../../shared/constants.js'
+import { addItem, removeItem, summarizeProfile } from '../../shared/style-analyzer.js'
+import { josa } from '../../shared/hangul.js'
+import { isStaticHosting } from '../notices.js'
 
 const SOURCE_LABEL = { text: '글', voice: '말', both: '글·말', user: '직접 추가' }
 const TEMPO_LABEL = { slow: '느긋한 편', normal: '보통', fast: '빠른 편', unknown: '측정 안 됨' }
@@ -178,7 +179,13 @@ export function profileView(ctx) {
         'div',
         null,
         h('h2', { class: 'card-title', id: 'title-samples' }, '대표 문장'),
-        h('p', { class: 'card-sub' }, '내 말투가 잘 드러난 문장이에요. 유행어를 만들 때 참고 자료로 서버에 전송되니, 보내고 싶지 않은 문장은 지워 주세요.'),
+        h(
+          'p',
+          { class: 'card-sub' },
+          isStaticHosting(ctx.status)
+            ? '내 말투가 잘 드러난 문장이에요. 유행어를 만들 때 이 브라우저 안에서 참고 자료로 써요. 쓰고 싶지 않은 문장은 지워 주세요.'
+            : '내 말투가 잘 드러난 문장이에요. 유행어를 만들 때 참고 자료로 서버에 전송되니, 보내고 싶지 않은 문장은 지워 주세요.',
+        ),
       ),
       samples.length
         ? h(
@@ -273,7 +280,11 @@ export function profileView(ctx) {
       'section',
       { class: 'card tint stack-s' },
       h('h2', { class: 'card-title' }, '내 프로필 관리'),
-      h('p', { class: 'small muted' }, '이 프로필은 이 기기(브라우저)에만 저장돼 있어요. 유행어를 만들 때만 요약본이 서버로 전송돼요.'),
+      h(
+        'p',
+        { class: 'small muted' },
+        isStaticHosting(ctx.status) ? '이 프로필은 이 기기(브라우저)에만 저장돼 있고, 어디로도 보내지 않아요.' : '이 프로필은 이 기기(브라우저)에만 저장돼 있어요. 유행어를 만들 때만 요약본이 서버로 전송돼요.',
+      ),
       h(
         'div',
         { class: 'row' },

@@ -1,8 +1,8 @@
 // 목소리 입력 — 마이크 음량과 브라우저 받아쓰기(Web Speech API)로 말투 등록에 쓸 재료를 모은다.
 // 원본 음성은 남기지 않는다: MediaRecorder를 쓰지 않고, 프레임마다 음량 수치 하나와 받아쓴 글만 모은다.
 // 음량 타임라인도 리듬 분석이 끝나면 바로 버린다.
-import { LIMITS } from '/shared/constants.js'
-import { FRAME_MS, analysisWindowSize, analyzeRhythm, emptyRhythm, frameLevel, readRecognitionResults } from '/shared/rhythm.js'
+import { LIMITS } from '../shared/constants.js'
+import { FRAME_MS, analysisWindowSize, analyzeRhythm, emptyRhythm, frameLevel, readRecognitionResults } from '../shared/rhythm.js'
 
 const DEFAULT_LANG = 'ko-KR'
 const MAX_SECONDS_LIMIT = 600
